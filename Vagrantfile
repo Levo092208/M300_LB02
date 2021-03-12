@@ -9,12 +9,14 @@ Vagrant.configure("2") do |config|
     
     # Provider Settings
      config.vm.provider "virtualbox" do |vb|
-       vb.name = "Vargant-Plex-VM-01"
+       vb.name = "Vargant-VM-01"
        vb.gui = true
        vb.memory = "4096"
     end
-  
-  
+    config.vm.provision "shell", inline: <<-SHELL do
+        sudo apt-get update
+    end
+    
     # Network Settings
     # config.vm.network "forwarded_port", guest: 80, host: 8080
     # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
