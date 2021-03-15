@@ -12,27 +12,23 @@ Vagrant.configure("2") do |config|
        vb.name = "Vargant-VM-01"
        vb.gui = true
        vb.memory = "4096"
-    end
-    config.vm.provision "shell", inline: <<-SHELL do
-        sudo apt-get update
+       config.vm.network "public_network"
+       
     end
     
-    # Network Settings
-    # config.vm.network "forwarded_port", guest: 80, host: 8080
-    # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
-    # config.vm.network "private_network", ip: "192.168.33.10"
-    # config.vm.network "public_network"
+  
   
     
     # Folder Settings
     # config.vm.synced_folder "../data", "/vagrant_data"
   
   
-    # Provision Settings
-    # config.vm.provision "shell", inline: <<-SHELL
-    #   apt-get update
-    #   apt-get install -y apache2
-    # SHELL
+     #Provision Settings
+     config.vm.provision "shell", inline: <<-SHELL
+       apt-get update
+       apt-get install -y apache2
+       ip addr show
+     SHELL
   
       
     #	Startup-Script
