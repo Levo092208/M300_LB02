@@ -25,9 +25,13 @@ Vagrant.configure("2") do |config|
   
      #Provision Settings
      config.vm.provision "shell", inline: <<-SHELL
-       apt-get update
-       apt-get install -y apache2
-       ip addr show
+       apt-get update 
+       apt-get upgrade -y
+       wget https://downloads.plex.tv/plex-media-server-new/1.19.3.2843-e3c1f7bcd/debian/plexmediaserver_1.19.3.2843-e3c1f7bcd_amd64.deb
+       sudo dpkg -i plexmediaserver_1.19.3.2843-e3c1f7bcd_amd64.deb 
+       y
+       
+      
      SHELL
   
       
