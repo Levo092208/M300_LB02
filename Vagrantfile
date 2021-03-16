@@ -4,18 +4,20 @@
 Vagrant.configure("2") do |config|
   
   # Box Settings
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "generic/ubuntu2004"
   
   
   # Provider Settings
    config.vm.provider "virtualbox" do |vb|
-     vb.name = "Plex-VM"
+     vb.name = "Plex-VM-M300-LB02"
      vb.gui = true
      vb.memory = "4096"
-     config.vm.network "public_network", ip: "192.168.1.101", guest:80, host:8080, auto_correct: true
+     
      
   end
   
+  config.vm.network "forwarded_port", guest: 32400, host: 32400
+  config.vm.network "forwarded_port", guest: 80, host: 8080
 
 
   
@@ -26,26 +28,18 @@ Vagrant.configure("2") do |config|
    #Provision Settings
    
      config.vm.provision "shell", inline: <<-SHELL
-       apt-get update 
-       apt-get upgrade -y
-       wget https://downloads.plex.tv/plex-media-server-new/1.19.3.2843-e3c1f7bcd/debian/plexmediaserver_1.19.3.2843-e3c1f7bcd_amd64.deb
-       sudo dpkg -i plexmediaserver_1.19.3.2843-e3c1f7bcd_amd64.deb 
-       systemctl enable plexmediaserver.service
-       systemctl restart plexmediaserver.service
-       systemctl start plexmediaserver.service
-       systemctl status plexmediaserver.service
-       sudo ufw allow 32400/tcp
-       sudo ufw allow ssh
-       sudo ufw status  
-       sudo ufw enable 
-       
-
-      
+     apt-get update
+     apt-get upgrade -y
+     
+     wget https://downloads.plex.tv/plex-media-server-new/1.22.0.4163-d8c4875dd/debian/plexmediaserver_1.22.0.4163-d8c4875dd_amd64.deb
+     
+     sudo dpkg -i plexmediaserver_1.22.0.4163-d8c4875dd_amd64.deb
+     
+     sudo systemctl enable plexmediaserver.service
+     sudo systemctl start plexmediaserver.service
+     sudo systemctl status plexmediaserver.service
+     
+     
      SHELL
-  
-      
-    #	Startup-Script
-    #	config.vm.provision :shell, path: "bootstrap.sh"
-    #	end
     
   end
